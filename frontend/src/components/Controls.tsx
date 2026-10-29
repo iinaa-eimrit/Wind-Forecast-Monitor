@@ -1,0 +1,3 @@
+export function RangeControls({ start, end, onStart, onEnd, horizon, onHorizon }: { start: string; end: string; onStart: (v: string) => void; onEnd: (v: string) => void; horizon: number; onHorizon: (v: number) => void }) {
+  return <div className="controls"><label>From <input type="date" min="2026-01-02" max="2026-02-01" value={start} onChange={e => onStart(e.target.value)} /></label><label>To <input type="date" min="2026-01-02" max="2026-02-01" value={end} onChange={e => onEnd(e.target.value)} /></label><label className="slider">Forecast horizon <b>{horizon} h</b><input type="range" min="0" max="48" step="1" value={horizon} onChange={e => onHorizon(Number(e.target.value))} /></label></div>;
+}
