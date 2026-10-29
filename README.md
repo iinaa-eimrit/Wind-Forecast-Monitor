@@ -19,6 +19,8 @@ uvicorn app.main:app --reload
 
 In another terminal, run `cd frontend && npm install && npm run dev`. The Vite development server proxies `/api` to FastAPI. API docs are available at `/docs`. `make refresh-data` refreshes the historical snapshot, and `make test` runs the Python suite.
 
+Run the project checks with `python -m ruff check backend`, `cd backend && python -m pytest -q`, and `cd frontend && npm run build`.
+
 ## Repository map
 
 | Path | Purpose |
@@ -34,7 +36,7 @@ In another terminal, run `cd frontend && npm install && npm run dev`. The Vite d
 
 ## Key decisions and limitations
 
-- A decision for delivery day D uses the latest forecast published by D-1 at 09:00 Europe/London; the cutoff can be changed in the decision screen.
+- A decision for delivery day D uses the latest forecast published by D-1 at 09:20 Europe/London, the EPEX SPOT GB hourly day-ahead order-book closure. The cutoff is editable for portfolios trading a different auction; see the [EPEX SPOT trading brochure](https://www.epexspot.com/sites/default/files/2024-02/Trading%20brochure%202024.pdf).
 - Accuracy at horizon h selects the latest forecast issued at least h hours before each target. This avoids flattering the forecast with information traders did not yet have.
 - Forecasts are hourly and FUELHH actuals half-hourly; the accuracy join uses exact matching target timestamps, so metrics use the shared hourly points.
 - WAPE is used instead of MAPE because near-zero wind can make MAPE misleading. The P90 error and dependable-wind figure are empirical estimates from this pilot month and are in-sample.
@@ -42,7 +44,7 @@ In another terminal, run `cd frontend && npm install && npm run dev`. The Vite d
 
 ## Deployment
 
-The Docker image runs the combined app locally or on a container host. Vercel's deployment model is separate: it serves the built frontend statically and exposes FastAPI through a Python function. Configure a Vercel project from this repository before adding its live URL here.
+The Docker image runs the combined app locally or on a container host. Vercel's deployment model is separate: it serves the built frontend statically and exposes FastAPI through a Python function. The Vercel configuration is ready, but the project has not been deployed yet because the browser is signed out of Vercel. Sign in at [Vercel](https://vercel.com/new), import `iinaa-eimrit/Wind-Forecast-Monitor` from GitHub, and deploy from the repository root. Add the live URL here after checking `/`, `/api/health`, and `/docs` on the deployed site.
 
 ## AI tools
 
@@ -50,4 +52,7 @@ AI assistance was used for project scaffolding, API boilerplate, typed UI compon
 
 ## Submission
 
-The assignment also requires a public GitHub repository, a deployed app, an unlisted video demo, and submission through the challenge form. The app URL and video link will be added after those external steps are complete.
+- Public repository: https://github.com/iinaa-eimrit/Wind-Forecast-Monitor
+- Live app: pending Vercel deployment
+- Unlisted demo video (client pitch + technical walkthrough, 10 minutes maximum): pending recording and upload
+- Challenge submission form: submit the repository, live app, and video links after both are ready

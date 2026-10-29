@@ -7,7 +7,7 @@ const gwh = (mwh: number) => `${(mwh / 1000).toFixed(1)} GWh`;
 
 export function DecisionPage() {
   const [day, setDay] = useState('2026-01-15');
-  const [cutoff, setCutoff] = useState('09:00');
+  const [cutoff, setCutoff] = useState('09:20');
   const [showActual, setShowActual] = useState(true);
   const [data, setData] = useState<DecisionResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +32,7 @@ export function DecisionPage() {
 
   return <section className="view">
     <div className="view-heading">
-      <div><p className="eyebrow">DECISION REPLAY <span>/</span> {headingDate.toUpperCase()}</p><h1>Day-ahead position</h1><p className="subhead">The forecast available to the desk before the delivery day.</p></div>
+      <div><p className="eyebrow">DECISION REPLAY <span>/</span> {headingDate.toUpperCase()}</p><h1>Day-ahead position</h1><p className="subhead">The forecast available to the desk before the delivery day. Default cutoff assumes the EPEX GB hourly auction.</p></div>
       <div className="replay-stamp"><span className="stamp-dot" /> HISTORICAL REPLAY</div>
     </div>
 

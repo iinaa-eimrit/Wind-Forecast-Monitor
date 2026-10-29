@@ -4,6 +4,7 @@ from datetime import date, time
 from pathlib import Path
 from typing import Optional
 
+import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
 
@@ -17,7 +18,7 @@ app = FastAPI(title="WindSight API", version="1.0.0", description="GB wind forec
 def _window(start: Optional[date], end: Optional[date]):
     actuals, forecasts = load()
     lo = actuals.start_time.min() if start is None else a.delivery_day_bounds_utc(start)[0]
-    hi = actuals.start_time.max() + __import__("pandas").Timedelta(minutes=30) if end is None else a.delivery_day_bounds_utc(end)[1]
+    hi = actuals.start_time.max() + pd.Timedelta(minutes=30) if end is None else a.delivery_day_bounds_utc(end)[1]
     if lo >= hi:
         raise HTTPException(400, "start must be before end")
     return actuals[(actuals.start_time >= lo) & (actuals.start_time < hi)], forecasts[(forecasts.start_time >= lo) & (forecasts.start_time < hi)]

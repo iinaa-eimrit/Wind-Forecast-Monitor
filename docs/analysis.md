@@ -4,7 +4,7 @@
 
 The committed snapshot contains 1,488 FUELHH wind actuals (48 settlement periods for each of 31 delivery dates) and 15,775 WINDFOR forecasts. Actual target times cover 2 January through 1 February 2026. Forecast publication times cover 30 December 2025 through 1 February 2026. The raw API field names and UTC timestamp examples are in `docs/samples/`; the stream records use `startTime`, `publishTime`, and `generation`. WINDFOR has eight distinct publication times per day in this sample, and forecast lead times range from 0.5 to 66.5 hours.
 
-Day-ahead decisions made 1–31 January 2026 correspond to delivery days 2 January–1 February. The decision cutoff is 09:00 Europe/London on D-1. Accuracy uses the latest forecast published at least the requested horizon before each target.
+Day-ahead decisions made 1–31 January 2026 correspond to delivery days 2 January–1 February. The default decision cutoff is 09:20 Europe/London on D-1, matching EPEX SPOT's GB 60-minute day-ahead order-book closure; it remains configurable because a portfolio may trade through a different auction. Accuracy uses the latest forecast published at least the requested horizon before each target.
 
 ## 24-hour accuracy findings
 
