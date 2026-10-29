@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 from datetime import date, time
 from pathlib import Path
+from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
@@ -11,7 +14,7 @@ from .data_store import load
 app = FastAPI(title="WindSight API", version="1.0.0", description="GB wind forecast monitor for the January 2026 day-ahead pilot")
 
 
-def _window(start: date | None, end: date | None):
+def _window(start: Optional[date], end: Optional[date]):
     actuals, forecasts = load()
     lo = actuals.start_time.min() if start is None else a.delivery_day_bounds_utc(start)[0]
     hi = actuals.start_time.max() + __import__("pandas").Timedelta(minutes=30) if end is None else a.delivery_day_bounds_utc(end)[1]
@@ -43,7 +46,7 @@ def meta():
 
 
 @app.get("/api/series")
-def series(start: date | None = None, end: date | None = None,
+def series(start: Optional[date] = None, end: Optional[date] = None,
            horizon_h: float = Query(24, ge=0, le=MAX_HORIZON_H)):
     actuals, forecasts = _window(start, end)
     selected = a.forecast_at_horizon(forecasts, horizon_h)
@@ -72,7 +75,7 @@ def decision(delivery_date: date, cutoff: time = DEFAULT_CUTOFF):
 
 
 @app.get("/api/accuracy")
-def accuracy(start: date | None = None, end: date | None = None,
+def accuracy(start: Optional[date] = None, end: Optional[date] = None,
              horizon_h: float = Query(24, ge=0, le=MAX_HORIZON_H)):
     actuals, forecasts = _window(start, end)
     joined = a.join_actuals(a.forecast_at_horizon(forecasts, horizon_h), actuals)
