@@ -44,7 +44,9 @@ Run the project checks with `python -m ruff check backend`, `cd backend && pytho
 
 ## Deployment
 
-The Docker image runs the combined app locally or on a container host. Vercel's deployment model is separate: it serves the built frontend statically and exposes FastAPI through a Python function. The Vercel configuration is ready, but the project has not been deployed yet because the browser is signed out of Vercel. Sign in at [Vercel](https://vercel.com/new), import `iinaa-eimrit/Wind-Forecast-Monitor` from GitHub, and deploy from the repository root. Add the live URL here after checking `/`, `/api/health`, and `/docs` on the deployed site.
+The Docker image runs the combined app locally or on a container host. Vercel uses two services in one project: the Vite frontend serves `/`, and FastAPI serves `/api/*` on the same domain. The backend service includes its historical CSV data under `backend/data/`; production Python dependencies are listed in `backend/requirements.txt`.
+
+To deploy, import `iinaa-eimrit/Wind-Forecast-Monitor` from GitHub, set the Vercel Framework Preset to **Services**, and keep the repository root as the project root. The root `vercel.json` defines service builds and routes API requests to FastAPI. The project has not been deployed yet. After deployment, check `/`, `/api/health`, `/api/meta`, and `/docs`, then add the live URL below.
 
 ## AI tools
 
