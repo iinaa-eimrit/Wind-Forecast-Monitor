@@ -19,6 +19,18 @@
   },
   "rewrites": [
     {
+      "source": "/docs",
+      "destination": { "service": "backend" }
+    },
+    {
+      "source": "/redoc",
+      "destination": { "service": "backend" }
+    },
+    {
+      "source": "/openapi.json",
+      "destination": { "service": "backend" }
+    },
+    {
       "source": "/api/(.*)",
       "destination": { "service": "backend" }
     },
