@@ -57,7 +57,7 @@ def metrics(df: pd.DataFrame) -> dict[str, float | int | None]:
     corr = float(np.corrcoef(df["forecast"], df["actual"])[0, 1]) if len(df) > 2 else None
     if corr is not None and not np.isfinite(corr):
         corr = None
-    return {"n": int(len(df)), "mae": float(abs_err.mean()), "rmse": float(np.sqrt(np.mean(err ** 2))),
+    return {"n": len(df), "mae": float(abs_err.mean()), "rmse": float(np.sqrt(np.mean(err ** 2))),
             "bias": float(err.mean()), "wape_pct": float(abs_err.sum() / actual_sum * 100) if actual_sum > 0 else None,
             "p50_abs": float(np.percentile(abs_err, 50)), "p90_abs": float(np.percentile(abs_err, 90)),
             "p99_abs": float(np.percentile(abs_err, 99)), "max_abs": float(abs_err.max()),
@@ -72,7 +72,7 @@ def error_by_horizon(fc: pd.DataFrame, actuals: pd.DataFrame, horizons=range(0, 
 def error_by_hour_of_day(df: pd.DataFrame) -> list[dict]:
     hours = df["start_time"].dt.tz_convert(MARKET_TZ).dt.hour
     grouped = df.assign(hour=hours, abs_err=df["error"].abs()).groupby("hour")
-    return [{"hour": int(hour), "mae": float(row["abs_err"].mean()), "bias": float(row["error"].mean()), "n": int(len(row))}
+    return [{"hour": int(hour), "mae": float(row["abs_err"].mean()), "bias": float(row["error"].mean()), "n": len(row)}
             for hour, row in grouped]
 
 

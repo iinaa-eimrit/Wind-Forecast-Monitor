@@ -1,0 +1,5 @@
+[tool.ruff]
+target-version = "py39"
+
+[tool.ruff.lint]
+ignore = ["UP045"] # Keep FastAPI annotations compatible with Python 3.9 as well as 3.12.

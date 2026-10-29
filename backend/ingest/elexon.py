@@ -20,7 +20,7 @@ def request_json(url: str, params: dict[str, str]) -> list[dict]:
             response.raise_for_status()
             payload = response.json()
             if not isinstance(payload, list):
-                raise ValueError(f"Expected a JSON array from {response.url}")
+                raise TypeError(f"Expected a JSON array from {response.url}")
             return payload
         except (httpx.HTTPError, ValueError):
             if attempt == 4:
